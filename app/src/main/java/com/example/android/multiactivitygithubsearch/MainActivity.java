@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements GitHubSearchAdapt
     @Override
     public void onSearchResultClicked(GitHubRepo repo) {
         Log.d(TAG, "Search result clicked: " + repo.fullName);
+        Intent intent = new Intent(this, RepoDetailActivity.class);
+        startActivity(intent);
     }
 
     public class GitHubSearchTask extends AsyncTask<String,Void,String> {
