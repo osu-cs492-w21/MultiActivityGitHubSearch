@@ -3,8 +3,6 @@ package com.example.android.multiactivitygithubsearch;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,9 +21,8 @@ import com.example.android.multiactivitygithubsearch.utils.NetworkUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GitHubSearchAdapter.OnSearchResultClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final OkHttpClient httpClient = new OkHttpClient();
 
     private RecyclerView searchResultsRV;
     private EditText searchBoxET;
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         this.searchResultsRV.setLayoutManager(new LinearLayoutManager(this));
         this.searchResultsRV.setHasFixedSize(true);
 
-        this.githubSearchAdapter = new GitHubSearchAdapter();
+        this.githubSearchAdapter = new GitHubSearchAdapter(this);
         this.searchResultsRV.setAdapter(this.githubSearchAdapter);
 
         Button searchButton = (Button)findViewById(R.id.btn_search);
@@ -65,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
     private void doGitHubSearch(String query) {
         String url = GitHubUtils.buildGitHubSearchURL(query);
         new GitHubSearchTask().execute(url);
+    }
+
+    @Override
+    public void onSearchResultClicked(GitHubRepo repo) {
+        Log.d(TAG, "Search result clicked: " + repo.fullName);
     }
 
     public class GitHubSearchTask extends AsyncTask<String,Void,String> {
