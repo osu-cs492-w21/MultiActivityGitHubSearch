@@ -2,7 +2,9 @@ package com.example.android.multiactivitygithubsearch.data;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GitHubRepo {
+import java.io.Serializable;
+
+public class GitHubRepo implements Serializable {
     @SerializedName("full_name")
     public String fullName;
 

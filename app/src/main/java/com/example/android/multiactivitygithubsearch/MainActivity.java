@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements GitHubSearchAdapt
     public void onSearchResultClicked(GitHubRepo repo) {
         Log.d(TAG, "Search result clicked: " + repo.fullName);
         Intent intent = new Intent(this, RepoDetailActivity.class);
+        intent.putExtra(RepoDetailActivity.EXTRA_GITHUB_REPO, repo);
         startActivity(intent);
     }
 
